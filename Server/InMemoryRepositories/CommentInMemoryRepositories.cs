@@ -76,7 +76,12 @@ public class CommentInMemoryRepositories : ICommentRepository
         throw new NotImplementedException();
     }
 
-    public Task<CommentReaction> GetSingleReaction(int commentId, int userId)
+    public Task<CommentReaction> GetSingleReaction(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IQueryable<PostReaction> getManyReactions()
     {
         throw new NotImplementedException();
     }

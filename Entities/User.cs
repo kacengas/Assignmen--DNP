@@ -2,9 +2,8 @@
 
 public class User
 {
-    public User(int ID, string username, string password)
+    public User(string username, string password)
     {
-        Id = ID;
         Username = username;
         Password = password;
     }
