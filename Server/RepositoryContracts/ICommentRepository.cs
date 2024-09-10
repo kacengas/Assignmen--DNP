@@ -12,6 +12,6 @@ public interface ICommentRepository
     Task<CommentReaction> AddReaction(PostReaction reaction);
     Task UpdateAsync(CommentReaction reaction);
     Task DeleteAsync(CommentReaction reaction);
-    Task<CommentReaction> GetSingleReaction(int commentId, int userId);
-    //IQueryable<PostReaction> GetMany(); ??? 
+    Task<CommentReaction> GetSingleReaction(int id);
+    IQueryable<PostReaction> getManyReactions(); 
 }

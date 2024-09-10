@@ -78,8 +78,13 @@ public class PostInMemoryRepositories : IPostRepository
         throw new NotImplementedException();
     }
 
-    public Task<PostReaction> GetSingleReaction(int postId, int userId)
+    public Task<PostReaction> GetSingleReaction(int id)
     {
         throw new NotImplementedException();
+    }
+
+    public IQueryable<PostReaction> GetManyReactions()
+    {
+        return reactions.AsQueryable();
     }
 }

@@ -9,6 +9,7 @@ public class PostReaction
         Type = type;
     }
     
+    public int Id { get; set; }
     public int PostId { get; set; }
     public int UserId { get; set; }
     public Enum Type { get; set; }

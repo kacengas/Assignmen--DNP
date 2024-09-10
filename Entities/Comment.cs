@@ -2,12 +2,12 @@
 
 public class Comment
 {
-    public Comment(int id, string content, DateTime date, User user)
+    public Comment(string content, DateTime date, int userId, int postId)
     {
-        Id = id;
         Content = content;
         Date = date;
-        User = user;
+        UserId = userId;
+        PostId = postId;
     }
 
     public int Id { get; set; }
@@ -16,5 +16,7 @@ public class Comment
 
     public DateTime Date { get; set; }
 
-    public User User { get; set; }
+    public int UserId { get;}
+    
+    public int PostId { get;}
 }
