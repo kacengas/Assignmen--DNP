@@ -22,8 +22,7 @@ public class PostInMemoryRepositories : IPostRepository
     public Task<Post> AddAsync(Post post)
     {
         post.Id = posts.Any()
-            ? posts.Max(p => p.Id) + 1
-            : 1;
+            ? posts.Max(p => p.Id) + 1 : 1;
         posts.Add(post);
         return Task.FromResult(post);
     }
@@ -82,7 +81,7 @@ public class PostInMemoryRepositories : IPostRepository
         return Task.FromResult(reaction);
     }
 
-    public Task UpdateAsync(PostReaction reaction)
+    public Task UpdateReactionAsync(PostReaction reaction)
     {
         PostReaction? existingPostReaction = postReactions.SingleOrDefault(pr => pr.Id == reaction.Id);
         if (existingPostReaction is null)
@@ -97,7 +96,7 @@ public class PostInMemoryRepositories : IPostRepository
         return Task.CompletedTask;
     }
 
-    public Task DeleteAsyncReaction(int id)
+    public Task DeleteReactionAsync(int id)
     {
         PostReaction? postReactionToRemove = postReactions.SingleOrDefault(p => p.Id == id);
         if (postReactionToRemove is null)

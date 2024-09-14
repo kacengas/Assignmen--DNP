@@ -31,6 +31,6 @@ public class DeleteUserView
             return;
         }
         
-        Console.WriteLine("User deleted");
+        Console.WriteLine("User deleted \n");
     }
 }

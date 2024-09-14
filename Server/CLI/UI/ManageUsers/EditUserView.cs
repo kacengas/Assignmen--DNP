@@ -28,12 +28,14 @@ public class EditUserView
 
         if (string.IsNullOrEmpty(newName) || string.IsNullOrEmpty(newPassword))
         {
-            throw new Exception("Username and password cannot be null or empty");
+            throw new Exception("Username and password cannot be null or empty \n");
         }
 
         user.Username = newName;
         user.Password = newPassword;
 
         await userRepository.UpdateAsync(user);
+        
+        Console.WriteLine("User has been updated \n");
     }
 }

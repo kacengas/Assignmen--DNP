@@ -10,8 +10,8 @@ public interface IPostRepository
     Task<Post> GetSingleAsync(int id);
     IQueryable<Post> GetMany();
     Task<PostReaction> AddReaction(PostReaction reaction);
-    Task UpdateAsync(PostReaction reaction);
-    Task DeleteAsyncReaction(int id);
+    Task UpdateReactionAsync(PostReaction reaction);
+    Task DeleteReactionAsync(int id);
     Task<PostReaction> GetSingleReaction(int id);
     IQueryable<PostReaction> GetManyReactions(); 
 }

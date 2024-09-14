@@ -1,4 +1,5 @@
-﻿using RepositoryContracts;
+﻿using CLI.UI.ManagePosts;
+using RepositoryContracts;
 using CLI.UI.ManageUsers;
 
 namespace CLI.UI;
@@ -22,6 +23,7 @@ public class CliApp
         { 
             Console.Clear();
             
+            Console.WriteLine("--- Main menu ---");
             Console.WriteLine("1. Manage users");
             Console.WriteLine("2. Manage posts");
             Console.WriteLine("3. Manage comments");
@@ -43,11 +45,7 @@ public class CliApp
                 case "0":
                     break;
                 default:
-                    if (int.Parse(input) > 3)
-                    {
-                        Console.WriteLine("Invalid option");
-                        return;
-                    }
+                    Console.WriteLine("\nInvalid option. Please try again.\n");
                     break;
             }
         }
@@ -66,7 +64,7 @@ public class CliApp
         while (true)
         {
             Console.WriteLine("--- Manage Users ---");
-            Console.WriteLine("1. Add user");
+            Console.WriteLine("1. Create user");
             Console.WriteLine("2. Edit user");
             Console.WriteLine("3. Delete user");
             Console.WriteLine("4. Show user");
@@ -95,7 +93,7 @@ public class CliApp
                 case "0":
                     return;
                 default:
-                    Console.WriteLine("Invalid option. Please try again.");
+                    Console.WriteLine("\nInvalid option. Please try again.\n");
                     break;
             }
         }
@@ -103,7 +101,45 @@ public class CliApp
 
     private async Task ManagePostsAsync()
     {
+        CreatePostView createPostView = new CreatePostView(postRepository);
+        EditPostView editPostView = new EditPostView(postRepository);
+        DeletePostView deletePostView = new DeletePostView(postRepository);
+        ShowPostView showPostView = new ShowPostView(postRepository);
+        PostListView postListView = new PostListView(postRepository);
         
+        Console.WriteLine("--- Manage Posts ---");
+        Console.WriteLine("1. Create post");
+        Console.WriteLine("2. Edit post");
+        Console.WriteLine("3. Delete post");
+        Console.WriteLine("4. Show post");
+        Console.WriteLine("5. Show list of posts");
+        Console.WriteLine("0. Back");
+        Console.Write("Enter option: ");
+        string? option = Console.ReadLine();
+
+        switch (option)
+        {
+            case "1":
+                await createPostView.CreatePost();
+                break;
+            case "2":
+                await editPostView.EditUser();
+                break;
+            case "3":
+                await deletePostView.DeletePost();        
+                break;
+            case "4":
+                await showPostView.ShowPost();
+                break;
+            case "5":
+                await postListView.ShowPostList();
+                break;
+            case "0":
+                return;
+            default:
+                Console.WriteLine("\nInvalid option. Please try again.\n");
+                break;
+        }
     }
 
     private async Task ManageCommentsAsync()

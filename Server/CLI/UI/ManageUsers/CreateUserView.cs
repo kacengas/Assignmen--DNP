@@ -30,13 +30,13 @@ public class CreateUserView
 
         if (string.IsNullOrEmpty(password) || password.Length < 8)
         {
-            Console.WriteLine("Password must be at least 8 characters");
+            Console.WriteLine("Password must be at least 8 characters \n");
             return;
         }
 
         User user = new User(name, password);
         await userRepository.AddAsync(user); 
 
-        Console.WriteLine("User created");
+        Console.WriteLine("User created \n");
     }
 }
