@@ -6,6 +6,14 @@ namespace InMemoryRepositories;
 public class UserInMemoryRepositories : IUserRepository
 {
     List<User> users = new();
+
+    public UserInMemoryRepositories()
+    {
+        _ = AddAsync(new User("Adrian", "1234")).Result;
+        _ = AddAsync(new User("Plamen", "4321")).Result;
+        _ = AddAsync(new User("Mario", "1243")).Result;
+        _ = AddAsync(new User("Vlad", "2143")).Result;
+    }
     
     public Task<User> AddAsync(User user)
     {
@@ -31,13 +39,13 @@ public class UserInMemoryRepositories : IUserRepository
         return Task.CompletedTask;
     }
 
-    public Task DeleteAsync(User user)
+    public Task DeleteAsync(int id)
     {
-        User? userToRemove = users.SingleOrDefault(u => u.Id == user.Id);
+        User? userToRemove = users.SingleOrDefault(u => u.Id == id);
         if (userToRemove is null)
         {
             throw new InvalidOperationException(
-                $"User with ID '{user.Id}' not found'");
+                $"User with ID '{id}' not found'");
         }
         
         users.Remove(userToRemove);

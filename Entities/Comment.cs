@@ -2,10 +2,10 @@
 
 public class Comment
 {
-    public Comment(string content, DateTime date, int userId, int postId)
+    public Comment(string content, int userId, int postId)
     {
         Content = content;
-        Date = date;
+        Date = DateTime.Now;
         UserId = userId;
         PostId = postId;
     }
