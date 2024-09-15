@@ -32,5 +32,8 @@ public class DeleteUserView
         }
         
         Console.WriteLine("User deleted \n");
+        
+        Console.WriteLine("Press any key to go back...");
+        Console.ReadKey();
     }
 }

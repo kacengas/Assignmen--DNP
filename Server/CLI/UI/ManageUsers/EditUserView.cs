@@ -37,5 +37,8 @@ public class EditUserView
         await userRepository.UpdateAsync(user);
         
         Console.WriteLine("User has been updated \n");
+        
+        Console.WriteLine("Press any key to go back...");
+        Console.ReadKey();
     }
 }

@@ -63,6 +63,8 @@ public class CliApp
 
         while (true)
         {
+            Console.Clear();
+            
             Console.WriteLine("--- Manage Users ---");
             Console.WriteLine("1. Create user");
             Console.WriteLine("2. Edit user");
@@ -101,6 +103,8 @@ public class CliApp
 
     private async Task ManagePostsAsync()
     {
+        Console.Clear();
+        
         CreatePostView createPostView = new CreatePostView(postRepository);
         EditPostView editPostView = new EditPostView(postRepository);
         DeletePostView deletePostView = new DeletePostView(postRepository);

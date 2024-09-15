@@ -27,5 +27,8 @@ public class PostListView
                               $"Posted by: {post.UserId} \n" +
                               $"Time: {post.Date} \n"); 
         }
+        
+        Console.WriteLine("Press any key to go back...");
+        Console.ReadKey();
     }
 }

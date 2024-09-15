@@ -38,5 +38,8 @@ public class CreateUserView
         await userRepository.AddAsync(user); 
 
         Console.WriteLine("User created \n");
+        
+        Console.WriteLine("Press any key to go back...");
+        Console.ReadKey();
     }
 }

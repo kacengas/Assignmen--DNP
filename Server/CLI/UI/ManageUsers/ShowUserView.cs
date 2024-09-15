@@ -24,5 +24,8 @@ public class ShowUserView
         Console.WriteLine($"ID: {user.Id} \n" +
                           $"Name: {user.Username} \n" +
                           $"Password: {user.Password} \n" );
+        
+        Console.WriteLine("Press any key to go back...");
+        Console.ReadKey();
     }
 }
