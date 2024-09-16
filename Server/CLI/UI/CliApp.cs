@@ -1,6 +1,7 @@
 ﻿using CLI.UI.ManagePosts;
 using RepositoryContracts;
 using CLI.UI.ManageUsers;
+using CLI.UI.ManageComments;
 
 namespace CLI.UI;
 
@@ -127,7 +128,7 @@ public class CliApp
                 await createPostView.CreatePost();
                 break;
             case "2":
-                await editPostView.EditUser();
+                await editPostView.EditPost();
                 break;
             case "3":
                 await deletePostView.DeletePost();        
@@ -148,6 +149,46 @@ public class CliApp
 
     private async Task ManageCommentsAsync()
     {
+        Console.Clear();
         
+        CreateCommentView createCommentView = new CreateCommentView(commentRepository);
+        EditCommentView editCommentView = new EditCommentView(commentRepository);
+        DeleteCommentView deleteCommentView = new DeleteCommentView(commentRepository);
+        ShowCommentView showCommentView = new ShowCommentView(commentRepository);
+        CommentListView postCommentView = new CommentListView(commentRepository);
+        
+        Console.WriteLine("--- Manage Comments ---");
+        Console.WriteLine("1. Create comment");
+        Console.WriteLine("2. Edit comment");
+        Console.WriteLine("3. Delete comment");
+        Console.WriteLine("4. Show comment");
+        Console.WriteLine("5. Show list of comments");
+        Console.WriteLine("0. Back");
+        Console.Write("Enter option: ");
+        string? option = Console.ReadLine();
+
+        switch (option)
+        {
+            case "1":
+                await createCommentView.CreateComment();
+                break;
+            case "2":
+                await editCommentView.EditComment();
+                break;
+            case "3":
+                await deleteCommentView.DeleteComment();        
+                break;
+            case "4":
+                await showCommentView.ShowComment();
+                break;
+            case "5":
+                await postCommentView.ShowCommentList();
+                break;
+            case "0":
+                return;
+            default:
+                Console.WriteLine("\nInvalid option. Please try again.\n");
+                break;
+        }
     }
 }

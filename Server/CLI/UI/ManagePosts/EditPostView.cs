@@ -11,7 +11,7 @@ public class EditPostView
         this.postRepository = postRepository;
     }
 
-    public async Task EditUser()
+    public async Task EditPost()
     {
         Console.Clear();
 
