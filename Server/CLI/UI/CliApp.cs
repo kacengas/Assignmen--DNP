@@ -111,39 +111,44 @@ public class CliApp
         DeletePostView deletePostView = new DeletePostView(postRepository);
         ShowPostView showPostView = new ShowPostView(postRepository);
         PostListView postListView = new PostListView(postRepository);
-        
-        Console.WriteLine("--- Manage Posts ---");
-        Console.WriteLine("1. Create post");
-        Console.WriteLine("2. Edit post");
-        Console.WriteLine("3. Delete post");
-        Console.WriteLine("4. Show post");
-        Console.WriteLine("5. Show list of posts");
-        Console.WriteLine("0. Back");
-        Console.Write("Enter option: ");
-        string? option = Console.ReadLine();
 
-        switch (option)
+        while (true)
         {
-            case "1":
-                await createPostView.CreatePost();
-                break;
-            case "2":
-                await editPostView.EditPost();
-                break;
-            case "3":
-                await deletePostView.DeletePost();        
-                break;
-            case "4":
-                await showPostView.ShowPost();
-                break;
-            case "5":
-                await postListView.ShowPostList();
-                break;
-            case "0":
-                return;
-            default:
-                Console.WriteLine("\nInvalid option. Please try again.\n");
-                break;
+            Console.Clear();
+            
+            Console.WriteLine("--- Manage Posts ---");
+            Console.WriteLine("1. Create post");
+            Console.WriteLine("2. Edit post");
+            Console.WriteLine("3. Delete post");
+            Console.WriteLine("4. Show post");
+            Console.WriteLine("5. Show list of posts");
+            Console.WriteLine("0. Back");
+            Console.Write("Enter option: ");
+            string? option = Console.ReadLine();
+
+            switch (option)
+            {
+                case "1":
+                    await createPostView.CreatePost();
+                    break;
+                case "2":
+                    await editPostView.EditPost();
+                    break;
+                case "3":
+                    await deletePostView.DeletePost();        
+                    break;
+                case "4":
+                    await showPostView.ShowPost();
+                    break;
+                case "5":
+                    await postListView.ShowPostList();
+                    break;
+                case "0":
+                    return;
+                default:
+                    Console.WriteLine("\nInvalid option. Please try again.\n");
+                    break;
+            }
         }
     }
 
@@ -156,39 +161,44 @@ public class CliApp
         DeleteCommentView deleteCommentView = new DeleteCommentView(commentRepository);
         ShowCommentView showCommentView = new ShowCommentView(commentRepository);
         CommentListView postCommentView = new CommentListView(commentRepository);
-        
-        Console.WriteLine("--- Manage Comments ---");
-        Console.WriteLine("1. Create comment");
-        Console.WriteLine("2. Edit comment");
-        Console.WriteLine("3. Delete comment");
-        Console.WriteLine("4. Show comment");
-        Console.WriteLine("5. Show list of comments");
-        Console.WriteLine("0. Back");
-        Console.Write("Enter option: ");
-        string? option = Console.ReadLine();
 
-        switch (option)
+        while (true)
         {
-            case "1":
-                await createCommentView.CreateComment();
-                break;
-            case "2":
-                await editCommentView.EditComment();
-                break;
-            case "3":
-                await deleteCommentView.DeleteComment();        
-                break;
-            case "4":
-                await showCommentView.ShowComment();
-                break;
-            case "5":
-                await postCommentView.ShowCommentList();
-                break;
-            case "0":
-                return;
-            default:
-                Console.WriteLine("\nInvalid option. Please try again.\n");
-                break;
+            Console.Clear();
+            
+            Console.WriteLine("--- Manage Comments ---");
+            Console.WriteLine("1. Create comment");
+            Console.WriteLine("2. Edit comment");
+            Console.WriteLine("3. Delete comment");
+            Console.WriteLine("4. Show comment");
+            Console.WriteLine("5. Show list of comments");
+            Console.WriteLine("0. Back");
+            Console.Write("Enter option: ");
+            string? option = Console.ReadLine();
+
+            switch (option)
+            {
+                case "1":
+                    await createCommentView.CreateComment();
+                    break;
+                case "2":
+                    await editCommentView.EditComment();
+                    break;
+                case "3":
+                    await deleteCommentView.DeleteComment();        
+                    break;
+                case "4":
+                    await showCommentView.ShowComment();
+                    break;
+                case "5":
+                    await postCommentView.ShowCommentList();
+                    break;
+                case "0":
+                    return;
+                default:
+                    Console.WriteLine("\nInvalid option. Please try again.\n");
+                    break;
+            }
         }
     }
 }

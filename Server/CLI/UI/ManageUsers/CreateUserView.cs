@@ -22,7 +22,6 @@ public class CreateUserView
         if (string.IsNullOrEmpty(name))
         {
             Console.WriteLine("User name cannot be empty");
-            return;
         }
 
         Console.WriteLine("Enter password: ");
@@ -31,7 +30,6 @@ public class CreateUserView
         if (string.IsNullOrEmpty(password) || password.Length < 8)
         {
             Console.WriteLine("Password must be at least 8 characters \n");
-            return;
         }
 
         User user = new User(name, password);

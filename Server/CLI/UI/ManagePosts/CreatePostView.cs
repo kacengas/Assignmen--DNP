@@ -22,7 +22,6 @@ public class CreatePostView
             if (!int.TryParse(Console.ReadLine(), out var userId))
             {
                 Console.WriteLine("Invalid user ID format. Please enter a valid integer.");
-                return;
             }
 
             Console.WriteLine("Enter title: ");

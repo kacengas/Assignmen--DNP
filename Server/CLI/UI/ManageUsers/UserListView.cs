@@ -14,13 +14,14 @@ public class UserListView
     public async Task ShowUserList()
     {
         Console.Clear();
-        Console.WriteLine("Showing users list");
+        Console.WriteLine("Showing list of users");
 
         var users = userRepository.GetMany();
 
         foreach (var user in users)
         {
             Console.WriteLine(
+                $"ID: {user.Id} \n" +
                 $"Name: {user.Username} \n" +
                 $"Password: {user.Password} \n");
         }
