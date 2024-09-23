@@ -15,28 +15,44 @@ public class DeletePostView
     {
         Console.Clear();
 
-        try
+        int postId = 0;
+
+        while (true)
         {
             Console.WriteLine("Enter post ID to delete: ");
-            if (!int.TryParse(Console.ReadLine(), out var postId))
+            if (int.TryParse(Console.ReadLine(), out postId))
             {
-                Console.WriteLine("Invalid ID format. Please enter a valid integer.");
-                return;
+                break;
             }
-            
-            
+            Console.WriteLine("Invalid ID format. Please enter a valid integer.");
+        }
+        
+        while (true)
+        {
             Console.WriteLine($"Are you sure you want to delete post with ID {postId}? (y/n): ");
             string? response = Console.ReadLine()?.ToLower();
 
             if (response == "y")
             {
-                await postRepository.DeleteAsync(postId);
-                Console.WriteLine("Post deleted successfully.\n");
+                try
+                {
+                    await postRepository.DeleteAsync(postId);
+                    Console.WriteLine("Post deleted successfully.\n");
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred while deleting the post: {ex.Message}");
+                    break;
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred while deleting the post: {ex.Message}");
+            else if (response == "n")
+            {
+                Console.WriteLine("Post deletion canceled.");
+                break;
+            }
+
+            Console.WriteLine("Invalid response. Please enter 'y' or 'n'.");
         }
         
         Console.WriteLine("Press any key to go back...");

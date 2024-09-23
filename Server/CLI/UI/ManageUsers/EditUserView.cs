@@ -1,4 +1,5 @@
-﻿using RepositoryContracts;
+﻿using Entities;
+using RepositoryContracts;
 
 namespace CLI.UI.ManageUsers;
 
@@ -11,33 +12,62 @@ public class EditUserView
         this.userRepository = userRepository;
     }
 
+    public bool IdExists(int userId)
+    {
+        return userRepository.GetMany().Any(u => u.Id == userId);
+    }
+
     public async Task EditUser()
     {
         Console.Clear();
-        
-        Console.WriteLine("Enter id: ");
-        var userId = Console.ReadLine();
 
-        var user = await userRepository.GetSingleAsync(int.Parse(userId));
-        
-        Console.WriteLine("Enter new name: ");
-        var newName = Console.ReadLine();
-        
-        Console.WriteLine("Enter new password: ");
-        var newPassword = Console.ReadLine();
+        User? user = null;
+        string? newPassword = null;
 
-        if (string.IsNullOrEmpty(newName) || string.IsNullOrEmpty(newPassword))
+        while (true)
         {
-            throw new Exception("Username and password cannot be null or empty \n");
+            Console.WriteLine("Enter user ID: ");
+            string? id = Console.ReadLine();
+
+            if (!string.IsNullOrEmpty(id) && IdExists(int.Parse(id)))
+            {
+                user = await userRepository.GetSingleAsync(int.Parse(id));
+                break;
+            }
+
+            Console.WriteLine("Invalid or non-existent ID. Please try again.\n");
         }
 
-        user.Username = newName;
-        user.Password = newPassword;
+        while (true)
+        {
+            Console.WriteLine("Enter new password: ");
+            newPassword = Console.ReadLine();
 
-        await userRepository.UpdateAsync(user);
-        
-        Console.WriteLine("User has been updated \n");
-        
+            if (!string.IsNullOrEmpty(newPassword) && newPassword.Length >= 8)
+            {
+                break;
+            }
+
+            Console.WriteLine("Password must be at least 8 characters. Please try again.\n");
+        }
+
+        while (true)
+        {
+            Console.WriteLine("Enter new name: ");
+            string? newName = Console.ReadLine();
+
+            if (!string.IsNullOrEmpty(newName))
+            {
+                user.Username = newName;
+                user.Password = newPassword;
+                await userRepository.UpdateAsync(user);
+                Console.WriteLine("User has been updated.\n");
+                break;
+            }
+
+            Console.WriteLine("User name cannot be empty. Please try again.\n");
+        }
+
         Console.WriteLine("Press any key to go back...");
         Console.ReadKey();
     }

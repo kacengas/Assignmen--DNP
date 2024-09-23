@@ -16,41 +16,46 @@ public class CreatePostView
     {
         Console.Clear();
 
-        try
+        int userId = 0;
+        string? title = null;
+        string? description = null;
+
+        while (true)
         {
             Console.WriteLine("Enter user ID: ");
-            if (!int.TryParse(Console.ReadLine(), out var userId))
+            if (int.TryParse(Console.ReadLine(), out userId))
             {
-                Console.WriteLine("Invalid user ID format. Please enter a valid integer.");
+                break;
             }
-
-            Console.WriteLine("Enter title: ");
-            string? title = Console.ReadLine();
-            if (string.IsNullOrEmpty(title))
-            {
-                Console.WriteLine("Title cannot be empty.");
-                return;
-            }
-            
-            Console.WriteLine("Enter description: ");
-            string? description = Console.ReadLine();
-            if (string.IsNullOrEmpty(description))
-            {
-                Console.WriteLine("Description cannot be empty.");
-                return;
-            }
-
-            Post post = new Post(userId, title, description);
-
-            await postRepository.AddAsync(post);
-
-            Console.WriteLine("Post created successfully.\n");
+            Console.WriteLine("Invalid user ID format. Please enter a valid integer.");
         }
-        catch (Exception ex)
+
+        while (true)
         {
-            Console.WriteLine($"An error occurred while creating the post: {ex.Message}");
+            Console.WriteLine("Enter title: ");
+            title = Console.ReadLine();
+            if (!string.IsNullOrEmpty(title))
+            {
+                break;
+            }
+            Console.WriteLine("Title cannot be empty. Please try again.");
         }
 
+        while (true)
+        {
+            Console.WriteLine("Enter description: ");
+            description = Console.ReadLine();
+            if (!string.IsNullOrEmpty(description))
+            {
+                break;
+            }
+            Console.WriteLine("Description cannot be empty. Please try again.");
+        }
+
+        Post post = new Post(userId, title, description);
+        await postRepository.AddAsync(post);
+
+        Console.WriteLine("Post created successfully.\n");
         Console.WriteLine("Press any key to go back...");
         Console.ReadKey();
     }

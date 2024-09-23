@@ -19,15 +19,22 @@ public class PostListView
 
         var posts = postRepository.GetMany();
 
-        foreach (var post in posts)
+        if (!posts.Any())
         {
-            Console.WriteLine($"ID: {post.Id} \n" +
-                              $"Title: {post.Title} \n" +
-                              $"Content: {post.Content} \n" +
-                              $"Posted by: {post.UserId} \n" +
-                              $"Time: {post.Date} \n"); 
+            Console.WriteLine("No posts available.\n");
         }
-        
+        else
+        {
+            foreach (var post in posts)
+            {
+                Console.WriteLine($"ID: {post.Id} \n" +
+                                  $"Title: {post.Title} \n" +
+                                  $"Content: {post.Content} \n" +
+                                  $"Posted by: {post.UserId} \n" +
+                                  $"Time: {post.Date} \n"); 
+            }
+        }
+
         Console.WriteLine("Press any key to go back...");
         Console.ReadKey();
     }

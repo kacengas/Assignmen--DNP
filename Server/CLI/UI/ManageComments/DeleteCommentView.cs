@@ -18,14 +18,17 @@ public class DeleteCommentView
 
         try
         {
-            Console.WriteLine("Enter comment ID to delete: ");
-            if (!int.TryParse(Console.ReadLine(), out var commentId))
+            int commentId;
+            while (true)
             {
+                Console.WriteLine("Enter comment ID to delete: ");
+                if (int.TryParse(Console.ReadLine(), out commentId))
+                {
+                    break;
+                }
                 Console.WriteLine("Invalid ID format. Please enter a valid integer.");
-                return;
             }
-            
-            
+
             Console.WriteLine($"Are you sure you want to delete comment with ID {commentId}? (y/n): ");
             string? response = Console.ReadLine()?.ToLower();
 
@@ -39,7 +42,7 @@ public class DeleteCommentView
         {
             Console.WriteLine($"An error occurred while deleting the comment: {e.Message}");
         }
-        
+
         Console.WriteLine("Press any key to go back...");
         Console.ReadKey();
     }

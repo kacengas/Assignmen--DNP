@@ -18,37 +18,49 @@ public class CreateCommentView
 
         try
         {
-            Console.WriteLine($"Enter user ID");
-            if (!int.TryParse(Console.ReadLine(), out var userId))
+            int userId;
+            while (true)
             {
+                Console.WriteLine("Enter user ID: ");
+                if (int.TryParse(Console.ReadLine(), out userId))
+                {
+                    break;
+                }
                 Console.WriteLine("Invalid user ID format. Please enter a valid integer.");
-                return;
             }
             
-            Console.WriteLine($"Enter post ID");
-            if (!int.TryParse(Console.ReadLine(), out var postId))
+            int postId;
+            while (true)
             {
-                Console.WriteLine("Invalid user ID format. Please enter a valid integer.");
-                return;
+                Console.WriteLine("Enter post ID: ");
+                if (int.TryParse(Console.ReadLine(), out postId))
+                {
+                    break;
+                }
+                Console.WriteLine("Invalid post ID format. Please enter a valid integer.");
             }
-            
-            Console.WriteLine($"Enter comment text");
-            string? commentText = Console.ReadLine();
-            if (string.IsNullOrEmpty(commentText))
+
+            string? commentText;
+            while (true)
             {
-                Console.WriteLine("Description cannot be empty.");
-                return;
+                Console.WriteLine("Enter comment text: ");
+                commentText = Console.ReadLine();
+                if (!string.IsNullOrEmpty(commentText))
+                {
+                    break;
+                }
+                Console.WriteLine("Comment text cannot be empty.");
             }
 
             await commentRepository.AddAsync(new Comment(commentText, userId, postId));
             
-            Console.WriteLine("Comment added. \n");
+            Console.WriteLine("Comment added successfully.\n");
         }
         catch (Exception e)
         {
             Console.WriteLine($"An error occurred while creating the comment: {e.Message}");
         }
-        
+
         Console.WriteLine("Press any key to go back...");
         Console.ReadKey();
     }

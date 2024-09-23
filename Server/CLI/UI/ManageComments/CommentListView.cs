@@ -18,15 +18,22 @@ public class CommentListView
 
         var comments = commentRepository.GetMany();
 
-        foreach (var comment in comments)
+        if (!comments.Any())
         {
-            Console.WriteLine($"ID: {comment.Id} \n" +
-                              $"Content: {comment.Content} \n" +
-                              $"Posted by: {comment.UserId} \n" +
-                              $"Posted on: {comment.PostId} \n" +
-                              $"Time: {comment.Date} \n");
+            Console.WriteLine("No comments available.\n");
         }
-        
+        else
+        {
+            foreach (var comment in comments)
+            {
+                Console.WriteLine($"ID: {comment.Id} \n" +
+                                  $"Content: {comment.Content} \n" +
+                                  $"Posted by: {comment.UserId} \n" +
+                                  $"Posted on: {comment.PostId} \n" +
+                                  $"Time: {comment.Date} \n");
+            }
+        }
+
         Console.WriteLine("Press any key to go back...");
         Console.ReadKey();
     }
