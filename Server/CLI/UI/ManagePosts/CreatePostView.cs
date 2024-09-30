@@ -52,7 +52,13 @@ public class CreatePostView
             Console.WriteLine("Description cannot be empty. Please try again.");
         }
 
-        Post post = new Post(userId, title, description);
+        Post post = new Post
+        {
+            UserId = userId,
+            Title = title,
+            Content = description,
+            Date = DateTime.Now
+        };
         await postRepository.AddAsync(post);
 
         Console.WriteLine("Post created successfully.\n");

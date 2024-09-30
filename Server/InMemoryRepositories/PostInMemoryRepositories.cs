@@ -9,15 +9,15 @@ public class PostInMemoryRepositories : IPostRepository
     List<Post> posts = new();
     List<PostReaction> postReactions = new();
 
-    public PostInMemoryRepositories()
-    {
-        _ = AddAsync(new Post(1,"Cat discussion", "Cats are pretty neat, sometimes.")).Result;
-        _ = AddAsync(new Post(1,"Cat discussion 2", "Cat dropped a dead bird in my bed. No longer neat.")).Result;
-        _ = AddAsync(new Post(3,"Dog discussion", "Dogs are just far superior to cats. EOD.")).Result;
-        _ = AddAsync(new Post(2,"Weather?", "So, does anyone else like weather?")).Result;
-        _ = AddAsync(new Post(4,"DNP QA", "This post is for DNP discussions, or if you need help with stuff.")).Result;
-        _ = AddAsync(new Post(3,"Best lawn mower?", "What's the bet lawn mower robot to mow my living room carpet?")).Result;
-    }
+    // public PostInMemoryRepositories()
+    // {
+    //     _ = AddAsync(new Post(1,"Cat discussion", "Cats are pretty neat, sometimes.")).Result;
+    //     _ = AddAsync(new Post(1,"Cat discussion 2", "Cat dropped a dead bird in my bed. No longer neat.")).Result;
+    //     _ = AddAsync(new Post(3,"Dog discussion", "Dogs are just far superior to cats. EOD.")).Result;
+    //     _ = AddAsync(new Post(2,"Weather?", "So, does anyone else like weather?")).Result;
+    //     _ = AddAsync(new Post(4,"DNP QA", "This post is for DNP discussions, or if you need help with stuff.")).Result;
+    //     _ = AddAsync(new Post(3,"Best lawn mower?", "What's the bet lawn mower robot to mow my living room carpet?")).Result;
+    // }
     
     public Task<Post> AddAsync(Post post)
     {
