@@ -55,7 +55,11 @@ public class CreateUserView
             Console.WriteLine("Password must be at least 8 characters. Please try again.\n");
         }
         
-        User user = new User(name, password);
+        User user = new User
+        {
+            Username = name,
+            Password = password
+        };
         await userRepository.AddAsync(user);
 
         Console.WriteLine("User created successfully.\n");

@@ -11,11 +11,13 @@ public class PostController
 {
     private readonly IPostRepository postRepository;
     private readonly IUserRepository userRepository;
+    private readonly ICommentRepository commentRepository;
     
-    public PostController(IPostRepository postRepository, IUserRepository userRepository)
+    public PostController(IPostRepository postRepository, IUserRepository userRepository, ICommentRepository commentRepository)
     {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.commentRepository = commentRepository;
     }
     
     // POST https://localhost:7276/Post
@@ -39,7 +41,19 @@ public class PostController
     public async Task<IResult> GetSinglePost([FromRoute]int id)
     {
         Post result = await postRepository.GetSingleAsync(id);
-        return Results.Ok(result);
+        if (result == null)
+        {
+            return Results.NotFound();
+        }
+
+        var comments = commentRepository.GetMany().Where(c => c.PostId == id);
+        var postWithComments = new
+        {
+            Post = result,
+            Comments = comments
+        };
+
+        return Results.Ok(postWithComments);
     }
     
     // DELETE https://localhost:7276/Post/{id}
@@ -58,7 +72,7 @@ public class PostController
     
     // PUT https://localhost:7276/Post/{id}
     [HttpPut("{id}")]
-    public async Task<IResult> UpdatePost([FromRoute]int id, [FromBody]CreatePostDto request)
+    public async Task<IResult> UpdatePost([FromRoute]int id, [FromBody]UpdatePostDto request)
     {
         Post post = await postRepository.GetSingleAsync(id);
         if (post == null)

@@ -26,9 +26,10 @@ public class CreateCommentView
                 {
                     break;
                 }
+
                 Console.WriteLine("Invalid user ID format. Please enter a valid integer.");
             }
-            
+
             int postId;
             while (true)
             {
@@ -37,6 +38,7 @@ public class CreateCommentView
                 {
                     break;
                 }
+
                 Console.WriteLine("Invalid post ID format. Please enter a valid integer.");
             }
 
@@ -49,10 +51,17 @@ public class CreateCommentView
                 {
                     break;
                 }
+
                 Console.WriteLine("Comment text cannot be empty.");
             }
 
-            await commentRepository.AddAsync(new Comment(commentText, userId, postId));
+            await commentRepository.AddAsync(new Comment
+            {
+                UserId = userId,
+                PostId = postId,
+                Content = commentText,
+                Date = DateTime.Now
+            });
             
             Console.WriteLine("Comment added successfully.\n");
         }
