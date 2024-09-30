@@ -5,10 +5,14 @@ namespace CLI.UI.ManagePosts;
 public class ShowPostView
 {
     private readonly IPostRepository postRepository;
+    private readonly ICommentRepository commentRepository;
+    private readonly IUserRepository userRepository;
 
-    public ShowPostView(IPostRepository postRepository)
+    public ShowPostView(IPostRepository postRepository, ICommentRepository commentRepository, IUserRepository userRepository)
     {
         this.postRepository = postRepository;
+        this.commentRepository = commentRepository;
+        this.userRepository = userRepository;
     }
 
     public async Task ShowPost()
@@ -37,6 +41,22 @@ public class ShowPostView
                               $"Content: {post.Content} \n" +
                               $"Posted by: {post.UserId} \n" +
                               $"Time: {post.Date}");
+            
+            var comments = commentRepository.GetMany().ToList();
+        
+            if (comments.Any())
+            {
+                Console.WriteLine("Comments: \n");
+                foreach (var comment in comments)
+                {
+                    var user = await userRepository.GetSingleAsync(comment.UserId);   
+                    Console.WriteLine($"{user.Username}: {comment.Content}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No comments yet.");
+            }
             
             Console.WriteLine("\nPress any key to go back...");
             Console.ReadKey();

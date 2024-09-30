@@ -109,7 +109,7 @@ public class CliApp
         CreatePostView createPostView = new CreatePostView(postRepository);
         EditPostView editPostView = new EditPostView(postRepository);
         DeletePostView deletePostView = new DeletePostView(postRepository);
-        ShowPostView showPostView = new ShowPostView(postRepository);
+        ShowPostView showPostView = new ShowPostView(postRepository, commentRepository, userRepository);
         PostListView postListView = new PostListView(postRepository);
 
         while (true)

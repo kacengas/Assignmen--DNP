@@ -51,7 +51,7 @@ public class CommentFileRepository : ICommentRepository
         comments.Remove(commentToUpdate);
         comments.Add(comment);
         await WriteData(comments);
-}
+    }
 
     public async Task DeleteAsync(int id)
     {

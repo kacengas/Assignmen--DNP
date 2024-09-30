@@ -7,12 +7,17 @@ namespace FileRepositories;
 public class PostFileRepository : IPostRepository
 {
     private readonly string filePath = "posts.json";
+    private readonly string reactionFilePath = "reactions.json";
 
     public PostFileRepository()
     {
         if (!File.Exists(filePath))
         {
             File.WriteAllText(filePath, "[]");
+        }
+        if (!File.Exists(reactionFilePath))
+        {
+            File.WriteAllText(reactionFilePath, "[]");
         }
     }
     
@@ -26,6 +31,18 @@ public class PostFileRepository : IPostRepository
     {
         string postsAsJson = JsonSerializer.Serialize(posts);
         await File.WriteAllTextAsync(filePath, postsAsJson);
+    }
+    
+    public async Task<List<PostReaction>> ReadDate()
+    {
+        string commentsAsJson = await File.ReadAllTextAsync(filePath);
+        return JsonSerializer.Deserialize<List<PostReaction>>(commentsAsJson)!;
+    }
+    
+    public async Task WriteData(List<PostReaction> reactions)
+    {
+        string commentsAsJson = JsonSerializer.Serialize(reactions);
+        await File.WriteAllTextAsync(filePath, commentsAsJson);
     }
     
     public async Task<Post> AddAsync(Post post)
