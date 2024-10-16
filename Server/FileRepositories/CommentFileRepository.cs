@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text.Json;
 using Entities;
 using RepositoryContracts;
 
@@ -7,12 +8,18 @@ namespace FileRepositories;
 public class CommentFileRepository : ICommentRepository
 {
     private readonly string filePath = "comments.json";
+    private readonly string reactionsFilePath = "commentReactions.json";
     
     public CommentFileRepository()
     {
         if (!File.Exists(filePath))
         {
             File.WriteAllText(filePath, "[]");
+        }
+
+        if (!File.Exists(reactionsFilePath))
+        {
+            File.WriteAllText(reactionsFilePath, "[]");
         }
     }
     
@@ -26,6 +33,18 @@ public class CommentFileRepository : ICommentRepository
     {
         string commentsAsJson = JsonSerializer.Serialize(comments, new JsonSerializerOptions { WriteIndented = true });
         await File.WriteAllTextAsync(filePath, commentsAsJson);
+    }
+    
+    public async Task<List<CommentReaction>> ReadReactionData()
+    {
+        string commentsAsJson = await File.ReadAllTextAsync(reactionsFilePath);
+        return JsonSerializer.Deserialize<List<CommentReaction>>(commentsAsJson)!;
+    }
+    
+    public async Task WriteReactionData(List<CommentReaction> reactions)
+    {
+        string commentsAsJson = JsonSerializer.Serialize(reactions, new JsonSerializerOptions { WriteIndented = true });
+        await File.WriteAllTextAsync(reactionsFilePath, commentsAsJson);
     }
     
     public async Task<Comment> AddAsync(Comment comment)
@@ -85,33 +104,65 @@ public class CommentFileRepository : ICommentRepository
     public IQueryable<Comment> GetMany()
     {
         string commentsAsJson = File.ReadAllTextAsync(filePath).Result;
-        List<Comment> comments = JsonSerializer.Deserialize<List<Comment>>(commentsAsJson) !;
+        List<Comment> comments = JsonSerializer.Deserialize<List<Comment>>(commentsAsJson)!;
         return comments.AsQueryable();
     }
 
     public async Task<CommentReaction> AddReaction(CommentReaction reaction)
     {
-        string await ReadData();
+        List<CommentReaction> reactions = await ReadReactionData();
+        int maxId = reactions.Count > 0 ? reactions.Max(r => r.Id) : 0;
+        reaction.Id = maxId + 1;
+        reactions.Add(reaction);
+        await WriteReactionData(reactions);
+        return reaction;
+    }
+
+    public async Task UpdateAsync(CommentReaction reaction)
+    {
+        List<CommentReaction> reactions = await ReadReactionData();
+        CommentReaction? reactionToUpdate = reactions.Find(r => r.Id == reaction.Id);
+    
+        if (reactionToUpdate == null)
+        {
+            throw new InvalidOperationException($"Reaction with ID '{reaction.Id}' not found'");
+        }
         
+        reactions.Remove(reactionToUpdate);
+        reactions.Add(reaction);
+        await WriteReactionData(reactions);
     }
 
-    public Task UpdateAsync(CommentReaction reaction)
+    public async Task DeleteAsyncReaction(int id)
     {
-        throw new NotImplementedException();
+        List<CommentReaction> reactions = await ReadReactionData();
+        CommentReaction? reactionToDelete = reactions.Find(r => r.Id == id);
+
+        if (reactionToDelete == null)
+        {
+            throw new InvalidOperationException($"Reaction with ID '{id}' not found'");
+        }
+        
+        reactions.Remove(reactionToDelete);
+        await WriteReactionData(reactions);
     }
 
-    public Task DeleteAsyncReaction(int id)
+    public async Task<CommentReaction> GetSingleReaction(int id)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<CommentReaction> GetSingleReaction(int id)
-    {
-        throw new NotImplementedException();
+        List<CommentReaction> reactions = await ReadReactionData();
+        CommentReaction? reactionToGet = reactions.Find(r => r.Id == id);
+        
+        if (reactionToGet is null)
+        {
+            throw new InvalidOperationException($"Reaction with ID '{id}' not found");
+        }
+        
+        return reactionToGet;
     }
 
     public IQueryable<CommentReaction> getManyReactions()
     {
-        throw new NotImplementedException();
+        List<CommentReaction> reactions = ReadReactionData().Result;
+        return reactions.AsQueryable();
     }
 }

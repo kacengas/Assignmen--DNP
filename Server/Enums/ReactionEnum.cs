@@ -1,6 +1,9 @@
-﻿namespace Enums;
+﻿using System.Text.Json.Serialization;
 
-enum reactionType
+namespace Enums;
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum reactionType
 {
     Like,
     Love,

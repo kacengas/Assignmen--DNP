@@ -161,6 +161,8 @@ public class CliApp
         DeleteCommentView deleteCommentView = new DeleteCommentView(commentRepository);
         ShowCommentView showCommentView = new ShowCommentView(commentRepository);
         CommentListView postCommentView = new CommentListView(commentRepository);
+        AddReactionView addReactionView = new AddReactionView(commentRepository);
+        CommentReactionListView commentReactionListView = new CommentReactionListView(commentRepository);
 
         while (true)
         {
@@ -172,6 +174,8 @@ public class CliApp
             Console.WriteLine("3. Delete comment");
             Console.WriteLine("4. Show comment");
             Console.WriteLine("5. Show list of comments");
+            Console.WriteLine("6. Add Reaction");
+            Console.WriteLine("7. See Reactions");
             Console.WriteLine("0. Back");
             Console.Write("Enter option: ");
             string? option = Console.ReadLine();
@@ -192,6 +196,12 @@ public class CliApp
                     break;
                 case "5":
                     await postCommentView.ShowCommentList();
+                    break;
+                case "6":
+                    await addReactionView.AddReaction();
+                    break;
+                case "7":
+                    await commentReactionListView.ShowList();
                     break;
                 case "0":
                     return;
