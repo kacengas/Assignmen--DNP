@@ -29,20 +29,20 @@ public class PostFileRepository : IPostRepository
     
     private async Task WriteData(List<Post> posts)
     {
-        string postsAsJson = JsonSerializer.Serialize(posts);
+        string postsAsJson = JsonSerializer.Serialize(posts, new JsonSerializerOptions { WriteIndented = true });
         await File.WriteAllTextAsync(filePath, postsAsJson);
     }
     
-    public async Task<List<PostReaction>> ReadDate()
+    public async Task<List<PostReaction>> ReadReactionData()
     {
-        string commentsAsJson = await File.ReadAllTextAsync(filePath);
+        string commentsAsJson = await File.ReadAllTextAsync(reactionFilePath);
         return JsonSerializer.Deserialize<List<PostReaction>>(commentsAsJson)!;
     }
     
-    public async Task WriteData(List<PostReaction> reactions)
+    public async Task WriteReactionData(List<PostReaction> reactions)
     {
-        string commentsAsJson = JsonSerializer.Serialize(reactions);
-        await File.WriteAllTextAsync(filePath, commentsAsJson);
+        string commentsAsJson = JsonSerializer.Serialize(reactions, new JsonSerializerOptions { WriteIndented = true });
+        await File.WriteAllTextAsync(reactionFilePath, commentsAsJson);
     }
     
     public async Task<Post> AddAsync(Post post)

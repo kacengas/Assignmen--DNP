@@ -25,7 +25,7 @@ public class UserFileRepository : IUserRepository
     
     private async Task WriteData(List<User> users)
     {
-        string usersAsJson = JsonSerializer.Serialize(users);
+        string usersAsJson = JsonSerializer.Serialize(users, new JsonSerializerOptions { WriteIndented = true });
         await File.WriteAllTextAsync(filePath, usersAsJson);
     }
     

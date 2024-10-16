@@ -24,7 +24,7 @@ public class CommentFileRepository : ICommentRepository
     
     private async Task WriteData(List<Comment> comments)
     {
-        string commentsAsJson = JsonSerializer.Serialize(comments);
+        string commentsAsJson = JsonSerializer.Serialize(comments, new JsonSerializerOptions { WriteIndented = true });
         await File.WriteAllTextAsync(filePath, commentsAsJson);
     }
     
@@ -76,7 +76,7 @@ public class CommentFileRepository : ICommentRepository
         if (commentToGet is null)
         {
             throw new InvalidOperationException(
-                $"Post with ID '{id}' not found");
+                $"Comment with ID '{id}' not found");
         }
 
         return commentToGet;
@@ -84,14 +84,15 @@ public class CommentFileRepository : ICommentRepository
 
     public IQueryable<Comment> GetMany()
     {
-        string postsAsJson = File.ReadAllTextAsync(filePath).Result;
-        List<Comment> posts = JsonSerializer.Deserialize<List<Comment>>(postsAsJson) !;
-        return posts.AsQueryable();
+        string commentsAsJson = File.ReadAllTextAsync(filePath).Result;
+        List<Comment> comments = JsonSerializer.Deserialize<List<Comment>>(commentsAsJson) !;
+        return comments.AsQueryable();
     }
 
-    public Task<CommentReaction> AddReaction(CommentReaction reaction)
+    public async Task<CommentReaction> AddReaction(CommentReaction reaction)
     {
-        throw new NotImplementedException();
+        string await ReadData();
+        
     }
 
     public Task UpdateAsync(CommentReaction reaction)
