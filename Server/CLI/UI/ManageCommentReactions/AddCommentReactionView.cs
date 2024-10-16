@@ -4,11 +4,11 @@ using Enums;
 
 namespace CLI.UI.ManageComments;
 
-public class AddReactionView
+public class AddCommentReactionView
 {
     private readonly ICommentRepository commentRepository;
     
-    public AddReactionView(ICommentRepository commentRepository)
+    public AddCommentReactionView(ICommentRepository commentRepository)
     {
         this.commentRepository = commentRepository;
     }
