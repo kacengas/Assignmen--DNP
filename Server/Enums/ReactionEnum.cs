@@ -2,10 +2,9 @@
 
 namespace Enums;
 
-[JsonConverter(typeof(JsonStringEnumConverter))]
-public enum reactionType
+public enum ReactionType
 {
-    Like,
+    Like = 0,
     Love,
     Laughing,
     Sad,

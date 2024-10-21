@@ -2,6 +2,7 @@
 using RepositoryContracts;
 using CLI.UI.ManageUsers;
 using CLI.UI.ManageComments;
+using CLI.UI.ManagePostReactions;
 
 namespace CLI.UI;
 
@@ -144,7 +145,7 @@ public class CliApp
                     await postListView.ShowPostList();
                     break;
                 case "6":
-                    await ManagePostReactionsAsync();
+                    // await ManagePostReactionsAsync();
                     break;
                 case "0":
                     return;
@@ -217,9 +218,9 @@ public class CliApp
         
         AddCommentReactionView addCommentReactionView = new AddCommentReactionView(commentRepository);
         CommentReactionListView commentReactionListView = new CommentReactionListView(commentRepository);
-        EditCommentReactionView EditCommentReactionView = new EditCommentReactionView(commentRepository);
-        DeleteCommentReactionView DeleteCommentReactionView = new DeleteCommentReactionView(commentRepository);
-        ShowCommentReactionView ShowCommentReactionView = new ShowCommentReactionView(commentRepository);
+        // EditCommentReactionView EditCommentReactionView = new EditCommentReactionView(commentRepository);
+        // DeleteCommentReactionView DeleteCommentReactionView = new DeleteCommentReactionView(commentRepository);
+        // ShowCommentReactionView ShowCommentReactionView = new ShowCommentReactionView(commentRepository);
 
         while (true)
         {
@@ -240,15 +241,15 @@ public class CliApp
                 case "1":
                     await addCommentReactionView.AddReaction();
                     break;
-                case "2":
-                    await EditCommentReactionView.EditReaction();
-                    break;
-                case "3":
-                    await DeleteCommentReactionView.DeleteReaction();
-                    break;
-                case "4":
-                    await ShowCommentReactionView.ShowReaction();
-                    break;
+                // case "2":
+                //     await EditCommentReactionView.EditReaction();
+                //     break;
+                // case "3":
+                //     await DeleteCommentReactionView.DeleteReaction();
+                //     break;
+                // case "4":
+                //     await ShowCommentReactionView.ShowReaction();
+                //     break;
                 case "5":
                     await commentReactionListView.ShowList();
                     break;
@@ -261,53 +262,53 @@ public class CliApp
         }
     }
 
-    public async Task ManagePostReactionsAsync()
-    {
-        Console.Clear();
-        
-        AddPostReactionView addPostReactionView = new AddPostReactionView(postRepository);
-        PostReactionListView postReactionListView = new PostReactionListView(postRepository);
-        EditPostReactionView editPostReactionView = new EditPostReactionView(postRepository);
-        DeletePostReactionView deletePostReactionView = new DeletePostReactionView(postRepository);
-        ShowPostReactionView showPostReactionView = new ShowPostReactionView(postRepository);
-        
-        while (true)
-        {
-            Console.Clear();
-            
-            Console.WriteLine("--- Manage Post Reactions ---");
-            Console.WriteLine("1. Create reaction");
-            Console.WriteLine("2. Edit reaction");
-            Console.WriteLine("3. Delete reaction");
-            Console.WriteLine("4. Show reaction");
-            Console.WriteLine("5. Show list of reactions");
-            Console.WriteLine("0. Back");
-            Console.Write("Enter option: ");
-            string? option = Console.ReadLine();
-
-            switch (option)
-            {
-                case "1":
-                    await addPostReactionView.AddReaction();
-                    break;
-                case "2":
-                    await editPostReactionView.EditReaction();
-                    break;
-                case "3":
-                    await deletePostReactionView.DeleteReaction();
-                    break;
-                case "4":
-                    await showPostReactionView.ShowReaction();
-                    break;
-                case "5":
-                    await postReactionListView.ShowList();
-                    break;
-                case "0":
-                    return;
-                default:
-                    Console.WriteLine("\nInvalid option. Please try again.\n");
-                    break;
-            }
-        }
-    }
+    // public async Task ManagePostReactionsAsync()
+    // {
+    //     Console.Clear();
+    //     
+    //     AddPostReactionView addPostReactionView = new AddPostReactionView(postRepository);
+    //     PostReactionListView postReactionListView = new PostReactionListView(postRepository);
+    //     EditPostReactionView editPostReactionView = new EditPostReactionView(postRepository);
+    //     DeletePostReactionView deletePostReactionView = new DeletePostReactionView(postRepository);
+    //     ShowPostReactionView showPostReactionView = new ShowPostReactionView(postRepository);
+    //     
+    //     while (true)
+    //     {
+    //         Console.Clear();
+    //         
+    //         Console.WriteLine("--- Manage Post Reactions ---");
+    //         Console.WriteLine("1. Create reaction");
+    //         Console.WriteLine("2. Edit reaction");
+    //         Console.WriteLine("3. Delete reaction");
+    //         Console.WriteLine("4. Show reaction");
+    //         Console.WriteLine("5. Show list of reactions");
+    //         Console.WriteLine("0. Back");
+    //         Console.Write("Enter option: ");
+    //         string? option = Console.ReadLine();
+    //
+    //         switch (option)
+    //         {
+    //             case "1":
+    //                 await addPostReactionView.AddReaction();
+    //                 break;
+    //             case "2":
+    //                 await editPostReactionView.EditReaction();
+    //                 break;
+    //             case "3":
+    //                 await deletePostReactionView.DeleteReaction();
+    //                 break;
+    //             case "4":
+    //                 await showPostReactionView.ShowReaction();
+    //                 break;
+    //             case "5":
+    //                 await postReactionListView.ShowList();
+    //                 break;
+    //             case "0":
+    //                 return;
+    //             default:
+    //                 Console.WriteLine("\nInvalid option. Please try again.\n");
+    //                 break;
+    //         }
+    //     }
+    // }
 }

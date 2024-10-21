@@ -61,7 +61,7 @@ public class AddCommentReactionView
             {
                 CommentId = commentId,
                 UserId = userId,
-                Type = Enum.TryParse<reactionType>(reactionText, true, out var reactionType) ? reactionType : throw new ArgumentException("Invalid reaction type")
+                Type = Enum.TryParse<ReactionType>(reactionText, true, out var reactionType) ? reactionType : throw new ArgumentException("Invalid reaction type")
                 
             });
 
