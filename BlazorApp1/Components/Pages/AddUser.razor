@@ -1,0 +1,53 @@
+﻿@page "/add-user"
+@using System.Net.Http
+@using System.Net.Http.Json
+@using Entities
+@inject HttpClient Http
+@rendermode InteractiveServer
+
+<PageTitle>Add User</PageTitle>
+
+<h1>Add User</h1>
+
+<label>Username</label>
+<input @bind="username" />
+
+<label>Password</label>
+<input type="password" @bind="password" />
+
+<button class="btn btn-primary" @onclick="addUser">Add</button>
+
+@code {
+    private string username;
+    private string password;
+
+    private async Task addUser()
+    {
+        try
+        {
+            var user = new User
+            {
+                Username = username,
+                Password = password
+            };
+            
+            
+            Console.WriteLine("here");
+            var response = await Http.PostAsJsonAsync("/user", user);
+
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("User added successfully!");
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Error adding user: {response.StatusCode} - {errorContent}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Exception occurred: {ex.Message}");
+        }
+    }
+}

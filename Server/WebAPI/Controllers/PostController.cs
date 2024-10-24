@@ -40,7 +40,7 @@ public class PostController
     [HttpGet("{id}")]
     public async Task<IResult> GetSinglePost([FromRoute]int id)
     {
-        Post result = await postRepository.GetSingleAsync(id);
+        var result = await postRepository.GetSingleAsync(id);
         if (result == null)
         {
             return Results.NotFound();
@@ -110,10 +110,8 @@ public class PostController
                 query = query.Where(p => p.UserId == user.Id);
             }
         }
-
+        
         var posts = query.ToList();
         return Results.Ok(posts);
-    }
-    
-    
+    } 
 }
