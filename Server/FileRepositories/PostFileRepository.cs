@@ -53,7 +53,6 @@ public class PostFileRepository : IPostRepository
         posts.Add(post);
         await WriteData(posts);
         return post;
-        posts.SingleOrDefault()
     }
 
     public async Task UpdateAsync(Post post)

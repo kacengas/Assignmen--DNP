@@ -9,13 +9,19 @@
 
 <h1>Add User</h1>
 
-<label>Username</label>
-<input @bind="username" />
+<div>
+    <label>Username</label>
+    <input @bind="username" />
+</div>
 
-<label>Password</label>
-<input type="password" @bind="password" />
+<div>
+    <label>Password</label>
+    <input type="password" @bind="password" />
+</div>
 
-<button class="btn btn-primary" @onclick="addUser">Add</button>
+<div>
+    <button class="btn btn-primary" @onclick="addUser">Add</button>    
+</div>
 
 @code {
     private string username;
@@ -30,9 +36,7 @@
                 Username = username,
                 Password = password
             };
-            
-            
-            Console.WriteLine("here");
+
             var response = await Http.PostAsJsonAsync("/user", user);
 
             if (response.IsSuccessStatusCode)
