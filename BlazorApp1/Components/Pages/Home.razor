@@ -1,7 +1,39 @@
 ﻿@page "/"
+@using Entities
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello!</h1>
 
-Welcome, checkout some new posts below.
+<p>Welcome, check out some new posts below.</p>
+
+@foreach (var post in posts)
+{
+    <div class="post">
+        <h2>
+            <a href="#" @onclick="() => NavigateToPost(post.Id)">@post.Title</a>
+        </h2>
+        <p>@post.Content</p>
+        <small>Posted on @post.Date by User @post.UserId</small>
+    </div>
+}
+
+@code {
+    private List<Post> posts = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Http.GetAsync("/post");
+        if (response.IsSuccessStatusCode)
+        {
+            posts = await response.Content.ReadFromJsonAsync<List<Post>>();
+        }
+    }
+
+    private void NavigateToPost(int postId)
+    {
+        NavigationManager.NavigateTo($"/post/{postId}");
+    }
+}

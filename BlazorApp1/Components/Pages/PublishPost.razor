@@ -1,11 +1,58 @@
 ﻿@page "/publish-post"
+@using System.Net
+@using Entities
+@inject HttpClient Http
 @attribute [StreamRendering]
 
 <PageTitle>Publish Post</PageTitle>
 
 <h1>Publish a post</h1>
 
+<div>
+    <label>Title</label>
+    <input @bind="title" />
+</div>
+
+<div>
+    <label>Content</label>
+    <input @bind="content"/>
+</div>
+
+<div>
+    <button class="btn btn-primary" @onclick="publishPost">Add</button>
+</div>
+
 @code 
 {
-    
+    private string title;
+    private string content;
+
+    private async Task publishPost()
+    {
+        try
+        {
+            var post = new Post
+            {
+                Title = title,
+                Content = content,
+                UserId = 1
+            };
+
+            var response = await Http.PostAsJsonAsync("/post", post);
+
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Post added successfully!");
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Error adding post: {response.StatusCode} - {errorContent}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Exception occurred: {ex.Message}");
+        }
+    }
 }

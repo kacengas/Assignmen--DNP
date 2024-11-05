@@ -1,1 +1,23 @@
-[{"Id":1,"UserId":1,"Title":"Samuelll","Content":"HI hi hi ","Date":"2024-09-30T09:20:50.6160054+02:00"}]
+[
+  {
+    "Id": 1,
+    "UserId": 1,
+    "Title": "Samuelll",
+    "Content": "HI hi hi ",
+    "Date": "2024-09-30T09:20:50.6160054+02:00"
+  },
+  {
+    "Id": 2,
+    "UserId": 1,
+    "Title": "Chris",
+    "Content": "Chris",
+    "Date": "2024-10-26T14:01:51.7358679+02:00"
+  },
+  {
+    "Id": 3,
+    "UserId": 1,
+    "Title": "Samuel",
+    "Content": "Samuel",
+    "Date": "2024-11-05T13:24:57.9869514+01:00"
+  }
+]
