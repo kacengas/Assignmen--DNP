@@ -1,32 +1,9 @@
 [
   {
     "Id": 1,
-    "Username": null,
-    "Password": null
-  },
-  {
-    "Id": 2,
-    "Username": null,
-    "Password": null
-  },
-  {
-    "Id": 3,
-    "Username": null,
-    "Password": null
-  },
-  {
-    "Id": 4,
-    "Username": "string",
-    "Password": "string"
-  },
-  {
-    "Id": 5,
-    "Username": "Samuel",
-    "Password": "Plamenovic"
-  },
-  {
-    "Id": 6,
-    "Username": "HEhe",
-    "Password": "hehe"
+    "Content": "Woah",
+    "Date": "2024-11-11T18:04:22.4559007+01:00",
+    "UserId": 0,
+    "PostId": 1
   }
 ]

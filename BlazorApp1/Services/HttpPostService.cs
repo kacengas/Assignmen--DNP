@@ -14,7 +14,7 @@ public class HttpPostService : IPostService
     
     public async Task<CreatePostDto> AddPostAsync(CreatePostDto createPostDto)
     {
-        HttpResponseMessage httpResponse = await client.PostAsJsonAsync("api/post", createPostDto);
+        HttpResponseMessage httpResponse = await client.PostAsJsonAsync("post", createPostDto);
         string response = await httpResponse.Content.ReadAsStringAsync();
         if (!httpResponse.IsSuccessStatusCode)
         {
@@ -26,9 +26,9 @@ public class HttpPostService : IPostService
         })!;
     }
     
-    public async Task<PostDto> GetPostAsync(int id)
+    public async Task<PostDto> GetAsync(int id)
     {
-        HttpResponseMessage httpResponse = await client.GetAsync($"api/post/{id}");
+        HttpResponseMessage httpResponse = await client.GetAsync($"post/{id}");
         string response = await httpResponse.Content.ReadAsStringAsync();
         if (!httpResponse.IsSuccessStatusCode)
         {
@@ -39,5 +39,16 @@ public class HttpPostService : IPostService
             PropertyNameCaseInsensitive = true
         })!;
     }
-
+    
+    public async Task<IEnumerable<PostDto>> GetPostsAsync()
+    {
+        try
+        {
+            return await client.GetFromJsonAsync<IEnumerable<PostDto>>("post");
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new Exception("Error fetching posts: " + ex.Message, ex);
+        }
+    }
 }

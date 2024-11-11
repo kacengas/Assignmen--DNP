@@ -40,5 +40,19 @@
     "Title": "Hello",
     "Content": "Hihihihihi",
     "Date": "2024-11-11T09:17:07.4952594+01:00"
+  },
+  {
+    "Id": 7,
+    "UserId": 1,
+    "Title": "Please",
+    "Content": "Please",
+    "Date": "2024-11-11T13:12:48.4922778+01:00"
+  },
+  {
+    "Id": 8,
+    "UserId": 1,
+    "Title": "Samuel",
+    "Content": "Samuel",
+    "Date": "2024-11-11T13:54:25.04966+01:00"
   }
 ]

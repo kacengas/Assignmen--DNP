@@ -1,10 +1,9 @@
-﻿@page "/post/{postId:int}"
-@using System.Text.Json
+﻿@page "/post/{id:int}"
 @using BlazorApp1.Services
 @using DTOs
 @using Entities
-@inject HttpClient Http
 @inject IPostService postService
+@inject ICommentService commentService
 @inject NavigationManager NavigationManager
 
 <PageTitle>Post Details</PageTitle>
@@ -29,15 +28,10 @@ else
     }
     else
     {
-        <ul class="comments-list">
-            @foreach (var comment in comments)
-            {
-                <li class="comment">
-                    <p>@comment.Content</p>
-                    <small>Posted on @comment.Date.ToString("MMMM dd, yyyy") by User @comment.UserId</small>
-                </li>
-            }
-        </ul>
+        @foreach (var comment in comments)
+        {
+            <p>User @comment.UserId said @comment.Content</p>
+        }
     }
     
     <h3>Add a Comment</h3>
@@ -45,19 +39,34 @@ else
         <textarea @bind="newCommentContent" placeholder="Enter your comment"></textarea>
     </div>
     <div>
-        <button class="btn btn-primary">Add Comment</button>
+        <button class="btn btn-primary" @onclick="() => AddComment(postToDisplay.Id)">Add Comment</button>
     </div>
     <button @onclick="GoBack">Back to Posts</button>
 }
 
 @code {
+    [Parameter]
+    public int id { get; set; }
+
     private PostDto postToDisplay;
-    private List<Comment>? comments;
-    private String newCommentContent = string.Empty;
+    private List<CreateCommentDto>? comments;
+    private string newCommentContent = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        postToDisplay = await postService.GetPostAsync(postId);
+        postToDisplay = await postService.GetAsync(id);
+        comments = await commentService.GetCommentsAsync(id);
+    }
+
+    public async Task AddComment(int postId)
+    {
+        await commentService.AddCommentAsync(new CreateCommentDto()
+        {
+            Content = newCommentContent,
+            PostId = postId
+        });
+        
+        comments = await commentService.GetCommentsAsync(id);
     }
 
     private void GoBack()

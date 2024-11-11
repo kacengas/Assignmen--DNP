@@ -84,7 +84,8 @@ public class CommentFileRepository : ICommentRepository
         }
         
         comments.Remove(commentToDelete);
-        await WriteData(comments); 
+        commentToDelete.Id = 0;
+        await WriteData(comments);
     }
 
     public async Task<Comment> GetSingleAsync(int id)

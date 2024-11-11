@@ -38,22 +38,12 @@
                 Password = password
             };
 
-            var response = await Http.PostAsJsonAsync("/user", user);
-
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine("User added successfully!");
+            await Http.PostAsJsonAsync("/user", user);
+            
+            username = string.Empty;
+            password = string.Empty;
                 
-                username = string.Empty;
-                password = string.Empty;
-                
-                await JSRuntime.InvokeVoidAsync("alert", "User added successfully!");
-            }
-            else
-            {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Error adding user: {response.StatusCode} - {errorContent}");
-            }
+            await JSRuntime.InvokeVoidAsync("alert", "User added successfully!");
         }
         catch (Exception ex)
         {

@@ -1,6 +1,8 @@
 ﻿@page "/"
+@using BlazorApp1.Services
+@using DTOs
 @using Entities
-@inject HttpClient Http
+@inject IPostService postService
 @inject NavigationManager NavigationManager
 
 <PageTitle>Home</PageTitle>
@@ -9,26 +11,25 @@
 
 <p>Welcome, check out some new posts below.</p>
 
-@foreach (var post in posts)
+@if (posts != null)
 {
-    <div class="post">
-        <h2>
-            <a href="#" @onclick="() => NavigateToPost(post.Id)">@post.Title</a>
-        </h2>
-        <small>Posted on @post.Date by User @post.UserId</small>
-    </div>
+    foreach (var post in posts)
+    {
+        <div class="post">
+            <h2>
+                <a href="#" @onclick="() => NavigateToPost(post.Id)">@post.Title</a>
+            </h2>
+            <small>Posted on @post.Date by User @post.UserId</small>
+        </div>
+    }
 }
 
 @code {
-    private List<Post> posts = new();
+    public List<PostDto>? posts;
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await Http.GetAsync("/post");
-        if (response.IsSuccessStatusCode)
-        {
-            posts = await response.Content.ReadFromJsonAsync<List<Post>>();
-        }
+        posts = await postService.GetPostsAsync() as List<PostDto>;
     }
 
     private void NavigateToPost(int postId)

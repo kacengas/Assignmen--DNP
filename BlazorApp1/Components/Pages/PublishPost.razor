@@ -1,7 +1,9 @@
 ﻿@page "/publish-post"
 @using System.Net
+@using BlazorApp1.Services
+@using DTOs
 @using Entities
-@inject HttpClient Http
+@inject IPostService postService
 @inject IJSRuntime JSRuntime
 @attribute [StreamRendering]
 
@@ -32,29 +34,21 @@
     {
         try
         {
-            var post = new Post
+            var post = new CreatePostDto()
             {
                 Title = title,
                 Content = content,
                 UserId = 1
             };
 
-            var response = await Http.PostAsJsonAsync("/post", post);
+            await postService.AddPostAsync(post);
 
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine("Post added successfully!");
+            Console.WriteLine("Post added successfully!");
                 
-                title = string.Empty;
-                content = string.Empty;
+            title = string.Empty;
+            content = string.Empty;
                 
-                await JSRuntime.InvokeVoidAsync("alert", "Post added successfully!");
-            }
-            else
-            {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Error adding post: {response.StatusCode} - {errorContent}");
-            }
+            await JSRuntime.InvokeVoidAsync("alert", "Post added successfully!");
         }
         catch (Exception ex)
         {
