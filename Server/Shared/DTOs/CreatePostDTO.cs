@@ -1,6 +1,6 @@
 ﻿namespace DTOs;
 
-public class CreatePostDto
+public class CreatePostDTO
 {
     public string Title { get; set; }
     public string Content { get; set; }

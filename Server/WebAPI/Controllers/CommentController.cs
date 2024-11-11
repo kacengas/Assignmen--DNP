@@ -23,7 +23,7 @@ public class CommentController
     
     // POST https://localhost:7276/Comment
     [HttpPost]
-    public async Task<IResult> CreateComment([FromBody]CreateCommentDto request)
+    public async Task<IResult> CreateComment([FromBody]CreateCommentDTO request)
     {
         Comment comment = new Comment
         {
@@ -61,7 +61,7 @@ public class CommentController
     
     // PUT https://localhost:7276/Comment/{id}
     [HttpPut("{id}")]
-    public async Task<IResult> UpdateComment([FromRoute]int id, [FromBody]UpdateCommentDto request)
+    public async Task<IResult> UpdateComment([FromRoute]int id, [FromBody]UpdateCommentDTO request)
     {
         Comment comment = await commentRepository.GetSingleAsync(id);
         if (comment == null)

@@ -12,7 +12,7 @@ public class HttpCommentService : ICommentService
         this.client = client;
     }
     
-    public async Task<CreateCommentDto> AddCommentAsync(CreateCommentDto createCommentDto)
+    public async Task<CreateCommentDTO> AddCommentAsync(CreateCommentDTO createCommentDto)
     {
         HttpResponseMessage httpResponse = await client.PostAsJsonAsync($"comment", createCommentDto);
         string response = await httpResponse.Content.ReadAsStringAsync();
@@ -20,20 +20,20 @@ public class HttpCommentService : ICommentService
         {
             throw new Exception($"Failed to retrieve post. Status Code: {httpResponse.StatusCode}, Response: {response}");
         }
-        return JsonSerializer.Deserialize<CreateCommentDto>(response, new JsonSerializerOptions
+        return JsonSerializer.Deserialize<CreateCommentDTO>(response, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
     }
 
-    public async Task<List<CreateCommentDto>> GetCommentsAsync(int postId)
+    public async Task<List<CreateCommentDTO>> GetCommentsAsync(int postId)
     {
         HttpResponseMessage response = await client.GetAsync($"comment");
         if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
         {
-            return new List<CreateCommentDto>();
+            return new List<CreateCommentDTO>();
         }
         response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<List<CreateCommentDto>>();
+        return await response.Content.ReadFromJsonAsync<List<CreateCommentDTO>>();
     }
 }

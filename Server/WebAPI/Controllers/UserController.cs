@@ -18,7 +18,7 @@ public class UserController
     
     // POST https://localhost:7276/User
     [HttpPost]
-    public async Task<IResult> CreateUser([FromBody]CreateUserDto request)
+    public async Task<IResult> CreateUser([FromBody]CreateUserDTO request)
     {
         User user = new User
         {
@@ -54,7 +54,7 @@ public class UserController
     
     // PUT https://localhost:7276/User/{id}
     [HttpPut("{id}")]
-    public async Task<IResult> UpdateUser([FromRoute]int id, [FromBody]UpdateUserDto request)
+    public async Task<IResult> UpdateUser([FromRoute]int id, [FromBody]UpdateUserDTO request)
     {
         User user = await userRepository.GetSingleAsync(id);
         if (user == null)

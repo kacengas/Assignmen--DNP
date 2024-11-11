@@ -1,6 +1,6 @@
 ﻿namespace DTOs;
 
-public class CreateCommentDto
+public class UpdateCommentDTO
 {
     public string Content { get; set; }
     public int UserId { get; set; }

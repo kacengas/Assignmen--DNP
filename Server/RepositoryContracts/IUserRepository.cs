@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using DTOs;
+using Entities;
 
 namespace RepositoryContracts;
 
@@ -9,4 +10,5 @@ public interface IUserRepository
     Task DeleteAsync(int it);
     Task<User> GetSingleAsync(int id);
     IQueryable<User> GetMany();
+    Task<User> GetByUsernameAsync(string username);
 }

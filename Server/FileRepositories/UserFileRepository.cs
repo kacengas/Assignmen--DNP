@@ -1,5 +1,6 @@
 ﻿using System.Reflection.Metadata;
 using System.Text.Json;
+using DTOs;
 using Entities;
 using RepositoryContracts;
 
@@ -89,5 +90,19 @@ public class UserFileRepository : IUserRepository
         string usersAsJson = File.ReadAllTextAsync(filePath).Result;
         List<User> users = JsonSerializer.Deserialize<List<User>>(usersAsJson) !;
         return users.AsQueryable();
+    }
+    
+        
+    public async Task<User> GetByUsernameAsync(string username)
+    {
+        List<User> users = await ReadData();
+        User? user = users.FirstOrDefault(u => u.Username == username);
+
+        if (user == null)
+        {
+            throw new InvalidOperationException($"User with username '{username}' not found");
+        }
+
+        return user;
     }
 }

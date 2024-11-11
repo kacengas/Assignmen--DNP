@@ -1,35 +1,45 @@
 ﻿@page "/"
 @using BlazorApp1.Services
 @using DTOs
-@using Entities
 @inject IPostService postService
 @inject NavigationManager NavigationManager
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Home</PageTitle> 
 
-<h1>Hello!</h1>
+<h1>Reddit Clone</h1> 
 
-<p>Welcome, check out some new posts below.</p>
+<AuthorizeView>
+    <Authorized>
+        <h3>Hello, @context.User.Identity.Name</h3>
+        <p>Checkout the new posts below!</p>
 
-@if (posts != null)
-{
-    foreach (var post in posts)
-    {
-        <div class="post">
-            <h2>
-                <a href="#" @onclick="() => NavigateToPost(post.Id)">@post.Title</a>
-            </h2>
-            <small>Posted on @post.Date by User @post.UserId</small>
-        </div>
-    }
-}
+        <!-- Only show posts if user is authorized -->
+        @if (posts != null)
+        {
+            foreach (var post in posts)
+            {
+                <div class="post">
+                    <h2>
+                        <a href="#" @onclick="() => NavigateToPost(post.Id)">@post.Title</a>
+                    </h2>
+                    <small>Posted on @post.Date by User @post.UserId</small>
+                </div>
+            }
+        }
+    </Authorized> 
+
+    <NotAuthorized> 
+        <p>lol you are not logged in!</p>
+        <button @onclick='() => NavigationManager.NavigateTo("login")'>Go to Login</button>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
-    public List<PostDto>? posts;
+    public List<PostDTO>? posts;
 
     protected override async Task OnInitializedAsync()
     {
-        posts = await postService.GetPostsAsync() as List<PostDto>;
+        posts = await postService.GetPostsAsync() as List<PostDTO>;
     }
 
     private void NavigateToPost(int postId)

@@ -1,32 +1,42 @@
 ﻿@page "/publish-post"
-@using System.Net
 @using BlazorApp1.Services
 @using DTOs
-@using Entities
 @inject IPostService postService
 @inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+
 @attribute [StreamRendering]
 
 <PageTitle>Publish Post</PageTitle>
 
 <h1>Publish a post</h1>
 
-<div>
-    <label>Title</label>
-    <input @bind="title" placeholder="Enter title" />
-</div>
+<AuthorizeView>
+    <Authorized>
+        <!-- Form to publish post only visible to authorized users -->
+        <div>
+            <label>Title</label>
+            <input @bind="title" placeholder="Enter title" />
+        </div>
 
-<div>
-    <label>Content</label>
-    <input @bind="content" placeholder="Enter content" />
-</div>
+        <div>
+            <label>Content</label>
+            <input @bind="content" placeholder="Enter content" />
+        </div>
 
-<div>
-    <button class="btn btn-primary" @onclick="publishPost">Add</button>
-</div>
+        <div>
+            <button class="btn btn-primary" @onclick="publishPost">Add</button>
+        </div>
+    </Authorized>
 
-@code 
-{
+    <NotAuthorized>
+        <!-- Message shown to unauthorized users -->
+        <p>You need to log in to publish a post!</p>
+        <button @onclick='() => NavigationManager.NavigateTo("login")'>Go to Login</button>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
     private string title;
     private string content;
 
@@ -34,10 +44,11 @@
     {
         try
         {
-            var post = new CreatePostDto()
+            var post = new CreatePostDTO()
             {
                 Title = title,
                 Content = content,
+                // Here you may want to assign UserId based on the logged-in user.
                 UserId = 1
             };
 

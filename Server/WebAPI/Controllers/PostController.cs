@@ -22,7 +22,7 @@ public class PostController
     
     // POST https://localhost:7276/Post
     [HttpPost]
-    public async Task<IResult> CreatePost([FromBody]CreatePostDto request)
+    public async Task<IResult> CreatePost([FromBody]CreatePostDTO request)
     {
         Post post = new Post
         {
@@ -72,7 +72,7 @@ public class PostController
     
     // PUT https://localhost:7276/Post/{id}
     [HttpPut("{id}")]
-    public async Task<IResult> UpdatePost([FromRoute]int id, [FromBody]UpdatePostDto request)
+    public async Task<IResult> UpdatePost([FromRoute]int id, [FromBody]UpdatePostDTO request)
     {
         Post post = await postRepository.GetSingleAsync(id);
         if (post == null)

@@ -1,7 +1,6 @@
 ﻿@page "/post/{id:int}"
 @using BlazorApp1.Services
 @using DTOs
-@using Entities
 @inject IPostService postService
 @inject ICommentService commentService
 @inject NavigationManager NavigationManager
@@ -48,8 +47,8 @@ else
     [Parameter]
     public int id { get; set; }
 
-    private PostDto postToDisplay;
-    private List<CreateCommentDto>? comments;
+    private PostDTO postToDisplay;
+    private List<CreateCommentDTO>? comments;
     private string newCommentContent = string.Empty;
 
     protected override async Task OnInitializedAsync()
@@ -60,7 +59,7 @@ else
 
     public async Task AddComment(int postId)
     {
-        await commentService.AddCommentAsync(new CreateCommentDto()
+        await commentService.AddCommentAsync(new CreateCommentDTO()
         {
             Content = newCommentContent,
             PostId = postId

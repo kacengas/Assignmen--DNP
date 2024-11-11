@@ -1,6 +1,6 @@
 ﻿namespace DTOs;
 
-public class PostDto
+public class PostDTO
 {
     public int Id { get; set; }
     public int UserId { get; set; }

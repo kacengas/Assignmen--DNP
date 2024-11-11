@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using DTOs;
+using Entities;
 
 namespace RepositoryContracts;
 
@@ -13,5 +14,5 @@ public interface IPostRepository
     Task UpdateReactionAsync(PostReaction reaction);
     Task DeleteReactionAsync(int id);
     Task<PostReaction> GetSingleReaction(int id);
-    IQueryable<PostReaction> GetManyReactions(); 
+    IQueryable<PostReaction> GetManyReactions();
 }
