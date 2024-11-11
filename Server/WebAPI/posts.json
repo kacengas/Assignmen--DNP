@@ -19,5 +19,26 @@
     "Title": "Samuel",
     "Content": "Samuel",
     "Date": "2024-11-05T13:24:57.9869514+01:00"
+  },
+  {
+    "Id": 4,
+    "UserId": 1,
+    "Title": "EWII Customer service sucks",
+    "Content": "I am not the damn phone for 15 minutes, \u0022first\u0022 in line",
+    "Date": "2024-11-11T09:06:27.3278704+01:00"
+  },
+  {
+    "Id": 5,
+    "UserId": 1,
+    "Title": "Get method not working",
+    "Content": "Can you guys help?",
+    "Date": "2024-11-11T09:10:23.8187133+01:00"
+  },
+  {
+    "Id": 6,
+    "UserId": 1,
+    "Title": "Hello",
+    "Content": "Hihihihihi",
+    "Date": "2024-11-11T09:17:07.4952594+01:00"
   }
 ]
