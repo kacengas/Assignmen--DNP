@@ -1,7 +1,10 @@
 ﻿@page "/post/{postId:int}"
 @using System.Text.Json
+@using BlazorApp1.Services
+@using DTOs
 @using Entities
 @inject HttpClient Http
+@inject IPostService postService
 @inject NavigationManager NavigationManager
 
 <PageTitle>Post Details</PageTitle>
@@ -42,95 +45,19 @@ else
         <textarea @bind="newCommentContent" placeholder="Enter your comment"></textarea>
     </div>
     <div>
-        <button class="btn btn-primary" @onclick="AddComment">Add Comment</button>
+        <button class="btn btn-primary">Add Comment</button>
     </div>
     <button @onclick="GoBack">Back to Posts</button>
 }
 
 @code {
-    [Parameter] public int postId { get; set; }
-    private Post? postToDisplay;
+    private PostDto postToDisplay;
     private List<Comment>? comments;
     private String newCommentContent = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            var postResponse = await Http.GetAsync($"post/{postId}");
-            if (postResponse.IsSuccessStatusCode)
-            {
-                var postJson = await postResponse.Content.ReadAsStringAsync();
-                Console.WriteLine($"Raw Post JSON: {postJson}");
-                postToDisplay = JsonSerializer.Deserialize<Post>(postJson);
-                Console.WriteLine($"Post Content: {postToDisplay?.Content}");
-                Console.WriteLine($"Post Title: {postToDisplay?.Title}");
-                Console.WriteLine($"Post Date: {postToDisplay?.Date}");
-                Console.WriteLine($"Post UserId: {postToDisplay?.UserId}");
-            }
-            else if (postResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                postToDisplay = null;
-            }
-
-            var commentsResponse = await Http.GetAsync($"post/{postId}/comments");
-
-            if (commentsResponse.IsSuccessStatusCode)
-            {
-                comments = await commentsResponse.Content.ReadFromJsonAsync<List<Comment>>();
-                foreach (var comment in comments)
-                {
-                    Console.WriteLine($"Comment Content: {comment.Content}");
-                    Console.WriteLine($"Comment Date: {comment.Date}");
-                    Console.WriteLine($"Comment UserId: {comment.UserId}");
-                }
-            }
-            else if (commentsResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                comments = new List<Comment>();
-            }
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"Error loading post details or comments: {ex.Message}");
-        }
-    }
-
-    private async Task AddComment()
-    {
-        if (string.IsNullOrWhiteSpace(newCommentContent))
-        {
-            Console.WriteLine("Comment content is empty.");
-            return;
-        }
-
-        var newComment = new Comment
-        {
-            Content = newCommentContent,
-            Date = DateTime.Now,
-            UserId = 1 // Replace with the actual user ID
-        };
-
-        try
-        {
-            var response = await Http.PostAsJsonAsync($"post/{postId}/comments", newComment);
-
-            if (response.IsSuccessStatusCode)
-            {
-                Console.WriteLine("Comment added successfully!");
-                newCommentContent = string.Empty;
-                comments.Add(newComment);
-            }
-            else
-            {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Error adding comment: {response.StatusCode} - {errorContent}");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Exception occurred: {ex.Message}");
-        }
+        postToDisplay = await postService.GetPostAsync(postId);
     }
 
     private void GoBack()

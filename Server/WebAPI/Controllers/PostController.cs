@@ -37,7 +37,7 @@ public class PostController
     }
     
     // GET https://localhost:7276/Post/{id}
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<IResult> GetSinglePost([FromRoute]int id)
     {
         var result = await postRepository.GetSingleAsync(id);
@@ -46,14 +46,14 @@ public class PostController
             return Results.NotFound();
         }
 
-        var comments = commentRepository.GetMany().Where(c => c.PostId == id);
-        var postWithComments = new
-        {
-            Post = result,
-            Comments = comments
-        };
+        // var comments = commentRepository.GetMany().Where(c => c.PostId == id);
+        // var postWithComments = new
+        // {
+        //     Post = result,
+        //     Comments = comments
+        // };
 
-        return Results.Ok(postWithComments);
+        return Results.Ok(result);
     }
     
     // DELETE https://localhost:7276/Post/{id}

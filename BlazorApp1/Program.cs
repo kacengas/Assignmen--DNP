@@ -7,11 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddScoped(sp => new HttpClient
-    {
-        BaseAddress = new Uri("https://localhost:7222")
-    }
-);
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7222") });
+builder.Services.AddScoped<IPostService, HttpPostService>();
+builder.Services.AddScoped<IUserService, HttpUserService>();
 
 var app = builder.Build();
 
