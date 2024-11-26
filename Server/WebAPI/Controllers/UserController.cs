@@ -20,11 +20,7 @@ public class UserController
     [HttpPost]
     public async Task<IResult> CreateUser([FromBody]CreateUserDTO request)
     {
-        User user = new User
-        {
-            Username = request.Username,
-            Password = request.Password
-        };
+        User user = new User(request.Username, request.Password);
         
         await userRepository.AddAsync(user);
         return Results.Created($"users/{user.Id}", user);

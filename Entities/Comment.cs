@@ -11,4 +11,14 @@ public class Comment
     public int UserId { get; set; }
     
     public int PostId { get; set; }
+    
+    private Comment() {}
+    
+    public Comment(string content, int userId, int postId)
+    {
+        Content = content;
+        UserId = userId;
+        PostId = postId;
+        Date = DateTime.Now;
+    }
 }

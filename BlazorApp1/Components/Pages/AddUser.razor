@@ -42,11 +42,7 @@
     {
         try
         {
-            var user = new User
-            {
-                Username = username,
-                Password = password
-            };
+            var user = new User(username, password);
 
             await Http.PostAsJsonAsync("/user", user);
             

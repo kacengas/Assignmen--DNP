@@ -1,6 +1,7 @@
 ﻿using DTOs;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RepositoryContracts;
 
 namespace WebAPI.Controllers;
@@ -24,13 +25,7 @@ public class PostController
     [HttpPost]
     public async Task<IResult> CreatePost([FromBody]CreatePostDTO request)
     {
-        Post post = new Post
-        {
-            Title = request.Title,
-            Content = request.Content,
-            UserId = request.UserId,
-            Date = DateTime.Now
-        };
+        Post post = new Post(request.Title, request.Content, request.UserId);
         
         await postRepository.AddAsync(post);
         return Results.Created($"posts/{post.Id}", post);
@@ -111,7 +106,7 @@ public class PostController
             }
         }
         
-        var posts = query.ToList();
+        var posts = query.ToListAsync();
         return Results.Ok(posts);
     } 
 }
